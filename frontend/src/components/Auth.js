@@ -1,0 +1,332 @@
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "./Auth.css";
+
+const AEM_HOST = "https://katrina-nonmonogamous-pseudofamously.ngrok-free.dev";
+
+const Auth = () => {
+  const [activeTab, setActiveTab] = useState("login");
+  const [formData, setFormData] = useState({
+    first_name: "",
+    last_name: "",
+    email: "",
+    phone_number: "",
+    password: "",
+    confirmPassword: "",
+  });
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const [aemData, setAemData] = useState(null);
+  const [imageUrl, setImageUrl] = useState("");
+  const API_URL = "http://localhost:5000/api/auth";
+
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  useEffect(() => {
+
+    fetch(`${AEM_HOST}/content/cq:graphql/TDTraining/endpoint.json`, {
+      method: "POST",
+
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Basic " + btoa("admin:admin"),
+        "ngrok-skip-browser-warning": "true",
+      },
+
+      body: JSON.stringify({
+        query: `
+      {
+        authpagemodelList {
+          items {
+            logotext
+
+            logintitle
+
+            loginsubtitle {
+              plaintext
+            }
+
+            signuptitle
+
+            signupsubtitle {
+              plaintext
+            }
+
+            herotitle {
+              plaintext
+            }
+
+            herosubtitle {
+              plaintext
+            }
+
+            cardtitle
+
+            carddescription {
+              plaintext
+            }
+
+            authimage {
+              ... on ImageRef {
+                _path
+              }
+            }
+          }
+        }
+      }
+      `
+      })
+    })
+      .then((res) => res.json())
+      .then((resData) => {
+        const item = resData.data.authpagemodelList.items[0];
+
+        setAemData(item);
+
+        if (item.authimage?._path) {
+          fetch(`${AEM_HOST}${item.authimage._path}`, {
+            headers: {
+              Authorization: "Basic " + btoa("admin:admin"),
+              "ngrok-skip-browser-warning": "true",
+            },
+          })
+            .then((res) => res.blob())
+            .then((blob) => {
+              const localImage = URL.createObjectURL(blob);
+              setImageUrl(localImage);
+            });
+        }
+      })
+      .catch((err) => console.log(err));
+
+  }, []);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setMessage("");
+    try {
+      if (activeTab === "signup") {
+        if (
+          formData.password !==
+          formData.confirmPassword
+        ) {
+          setMessage("Passwords do not match");
+          setLoading(false);
+          return;
+        }
+        const res = await fetch(
+          `${API_URL}/register`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              first_name: formData.first_name,
+              last_name: formData.last_name,
+              email: formData.email,
+              phone_number: formData.phone_number,
+              password: formData.password,
+            }),
+          }
+        );
+        const data = await res.json();
+        setMessage(data.message);
+        if (res.ok) {
+
+          setFormData({
+            first_name: "",
+            last_name: "",
+            email: "",
+            phone_number: "",
+            password: "",
+            confirmPassword: "",
+          });
+          setActiveTab("login");
+        }
+      }
+      else {
+        const res = await fetch(
+          `${API_URL}/login`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              email: formData.email,
+              password: formData.password,
+            }),
+          }
+        );
+        const data = await res.json();
+        if (res.ok) {
+          localStorage.setItem(
+            "token",
+            data.token
+          );
+          localStorage.setItem(
+            "user",
+            JSON.stringify(data.user)
+          );
+          setMessage("Login Successful");
+          navigate("/profile");
+        } else {
+          setMessage(data.message);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+      setMessage("Something went wrong");
+    }
+    setLoading(false);
+  };
+
+  if (!aemData) {
+    return <p>Loading...</p>;
+  }
+
+  return (
+    <div className="auth-page">
+      <div className="auth-container">
+        <div className="auth-left">
+          <div className="auth-logo">
+            <h2>{aemData.logotext}</h2>
+            <p>Explore More. Experience Life.</p>
+          </div>
+          <div className="auth-tabs">
+            <button
+              className={activeTab === "signup" ? "active" : ""}
+              onClick={() => setActiveTab("signup")}
+            >
+              Sign Up
+            </button>
+            <button
+              className={activeTab === "login" ? "active" : ""}
+              onClick={() => setActiveTab("login")}
+            >
+              Log In
+            </button>
+          </div>
+          <div className="auth-content">
+            <h1>
+              {activeTab === "login"
+                ? aemData.logintitle
+                : aemData.signuptitle}
+            </h1>
+            <p className="auth-subtitle">
+              {message && (
+                <p className="auth-message">
+                  {message}
+                </p>
+              )}
+              {activeTab === "login"
+                ? aemData.loginsubtitle?.plaintext
+                : aemData.signupsubtitle?.plaintext}
+            </p>
+            <form
+              className="auth-form"
+              onSubmit={handleSubmit}
+            >
+              {activeTab === "signup" && (
+                <div className="name-row">
+
+                  <input
+                    type="text"
+                    name="first_name"
+                    placeholder="First Name"
+                    onChange={handleChange}
+                  />
+
+                  <input
+                    type="text"
+                    name="last_name"
+                    placeholder="Last Name"
+                    onChange={handleChange}
+                  />
+
+                </div>
+              )}
+              <input
+                type="email"
+                name="email"
+                placeholder="Email Address"
+                onChange={handleChange}
+              />
+              {activeTab === "signup" && (
+                <input
+                  type="text"
+                  name="phone_number"
+                  placeholder="Phone Number"
+                  onChange={handleChange}
+                />
+              )}
+              <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                onChange={handleChange}
+              />
+              {activeTab === "signup" && (
+                <input
+                  type="password"
+                  name="confirmPassword"
+                  placeholder="Confirm Password"
+                  onChange={handleChange}
+                />
+              )}
+              <div className="auth-options">
+                {activeTab === "login" && (
+                  <span className="forgot">
+                    Forgot Password?
+                  </span>
+                )}
+              </div>
+              <button
+                className="auth-btn"
+                type="submit"
+              >
+                {loading
+                  ? "Please wait..."
+                  : activeTab === "login"
+                    ? "Login"
+                    : "Let's Start"}
+              </button>
+            </form>
+          </div>
+        </div>
+        <div className="auth-right" style={{
+          backgroundImage: `url(${imageUrl})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}>
+          <div className="auth-overlay"></div>
+          <div className="travel-card">
+            <h3>{aemData.cardtitle}</h3>
+            <p>
+              {aemData.carddescription?.plaintext}
+            </p>
+          </div>
+          <div className="travel-text">
+            <h1>
+              {aemData.herotitle?.plaintext}
+            </h1>
+            <p>
+              {aemData.herosubtitle?.plaintext}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Auth;

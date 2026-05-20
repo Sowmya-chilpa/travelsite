@@ -1,0 +1,155 @@
+.travel-policies-page {
+  width: 100%;
+  min-height: 100vh;
+  font-family: sans-serif;
+  color: #1a1a2e;
+}
+
+.policies-loading {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  color: #888;
+}
+
+.policies-hero {
+  position: relative;
+  width: 100%;
+  height: 520px;
+  overflow: hidden;
+}
+
+.policies-hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.policies-hero:hover .policies-hero-image {
+  transform: scale(1.02);
+}
+
+.policies-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(10, 10, 30, 0.2) 0%, rgba(10, 10, 30, 0.62) 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 24px;
+}
+
+.policies-overlay h1 {
+  font-family: 'Lora', serif;
+  font-style: italic;
+  font-size: 52px;
+  font-weight: 400;
+  color: #fff;
+  margin-bottom: 18px;
+  letter-spacing: 0.01em;
+}
+
+.policies-overlay p {
+  font-size: 17px;
+  color: rgba(255, 255, 255, 0.88);
+  max-width: 620px;
+  line-height: 1.75;
+}
+
+.policies-intro {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 64px 24px;
+  text-align: center;
+  border-bottom: 1px solid #eef0f4;
+}
+
+.policies-intro h2 {
+  font-family: 'Lora', serif;
+  font-size: 32px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #1a1a2e;
+}
+
+.policies-intro p {
+  font-size: 17px;
+  line-height: 1.85;
+  color: #555e6e;
+}
+
+.policies-container {
+  max-width: 840px;
+  margin: 0 auto;
+  padding: 48px 24px 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.policy-card {
+  padding: 32px 28px;
+  border-radius: 14px;
+  background: #fff;
+  border: 1px solid #e8ecf3;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.policy-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.07);
+}
+
+.policy-card h3 {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #2563eb;
+  margin-bottom: 14px;
+}
+
+.policy-card p {
+  font-size: 15px;
+  line-height: 1.85;
+  color: #555e6e;
+}
+
+@media (max-width: 768px) {
+  .policies-hero {
+    height: 360px;
+  }
+
+  .policies-overlay h1 {
+    font-size: 34px;
+  }
+
+  .policies-overlay p {
+    font-size: 15px;
+  }
+
+  .policies-intro {
+    padding: 48px 20px;
+  }
+
+  .policies-intro h2 {
+    font-size: 26px;
+  }
+
+  .policies-intro p {
+    font-size: 15px;
+  }
+
+  .policies-container {
+    padding: 32px 20px 60px;
+  }
+
+  .policy-card {
+    padding: 24px 20px;
+  }
+}

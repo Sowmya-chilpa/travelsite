@@ -1,0 +1,168 @@
+.footer {
+  font-family: 'Poppins', sans-serif;
+  position: relative;
+  padding: 10px 10px;
+  text-align: center;
+  max-height: 500px;
+  color: white;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    rgba(8, 30, 60, 0.3),
+    rgba(8, 30, 60, 0.6)
+  );
+}
+
+.footer-content {
+  position: relative;
+  z-index: 2;
+}
+
+.logo {
+font-family: 'Playfair Display', serif;
+  font-weight: 600;
+}
+
+.tagline {
+  font-size: 18px;
+  font-weight: 300;
+  letter-spacing: 1px;
+  margin: 15px 0 30px;
+  opacity: 0.9;
+}
+
+.links {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-bottom: 30px;
+}
+
+.links a {
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.links a:hover {
+  color: #F9A826;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  font-size: 22px;
+  margin-bottom: 30px;
+}
+
+.social-icons svg {
+  font-size: 22px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.social-icons svg:hover {
+  color: #F9A826;
+  transform: scale(1.2);
+}
+
+.contact,
+.cookies,
+.copyright {
+  margin: 8px 0;
+  font-size: 15px;
+}
+
+@media (max-width: 1024px) {
+  .footer {
+    padding: 30px 15px;
+  }
+
+  .tagline {
+    font-size: 16px;
+    margin: 12px 0 25px;
+  }
+
+  .links {
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .links a {
+    font-size: 15px;
+  }
+
+  .social-icons {
+    gap: 15px;
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer {
+    padding: 25px 12px;
+  }
+
+  .logo {
+    font-size: 20px;
+  }
+
+  .tagline {
+    font-size: 14px;
+    margin: 10px 0 20px;
+  }
+
+  .links {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .links a {
+    font-size: 14px;
+  }
+
+  .social-icons {
+    gap: 12px;
+    font-size: 18px;
+  }
+
+  .contact,
+  .cookies,
+  .copyright {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer {
+    padding: 20px 10px;
+  }
+
+  .logo {
+    font-size: 18px;
+  }
+
+  .tagline {
+    font-size: 13px;
+    letter-spacing: 0.5px;
+  }
+
+  .links {
+    gap: 10px;
+  }
+
+  .social-icons {
+    gap: 10px;
+    font-size: 16px;
+  }
+
+  .contact,
+  .cookies,
+  .copyright {
+    font-size: 12px;
+  }
+}

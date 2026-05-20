@@ -1,0 +1,101 @@
+.travelStoriesPage {
+  padding: 60px 40px;
+  background-color: #f5f7fa;
+  min-height: 100vh;
+}
+
+.travelStoriesHeading {
+  font-size: 42px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 50px;
+  color: #1f2937;
+}
+
+.storiesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 32px;
+}
+
+.storyCard {
+  background: white;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease;
+}
+
+.storyCard:hover {
+  transform: translateY(-8px);
+}
+
+.storyImageWrapper {
+  width: 100%;
+  height: 240px;
+  overflow: hidden;
+}
+
+.storyImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.storyPlaceholder {
+  width: 100%;
+  height: 100%;
+  background-color: #d1d5db;
+}
+
+.storyContent {
+  padding: 22px;
+}
+
+.storyTitle {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: #111827;
+}
+
+.storyLocation {
+  font-size: 15px;
+  font-weight: 600;
+  color: #2563eb;
+  margin-bottom: 14px;
+}
+
+.storyDescription {
+  font-size: 15px;
+  line-height: 1.7;
+  color: #4b5563;
+  margin-bottom: 20px;
+}
+
+.storyAuthor {
+  font-size: 14px;
+  font-weight: 600;
+  color: #6b7280;
+}
+
+@media (max-width: 768px) {
+
+  .travelStoriesPage {
+    padding: 40px 20px;
+  }
+
+  .travelStoriesHeading {
+    font-size: 32px;
+    margin-bottom: 35px;
+  }
+
+  .storiesGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .storyImageWrapper {
+    height: 220px;
+  }
+
+}

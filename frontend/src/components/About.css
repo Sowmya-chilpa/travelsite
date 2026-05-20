@@ -1,0 +1,142 @@
+.about-page {
+  width: 100%;
+  font-family:  sans-serif;
+  color: #1a1a2e;
+}
+
+.about-loading {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  color: #888;
+}
+
+.about-hero {
+  position: relative;
+  width: 100%;
+  height: 520px;
+  overflow: hidden;
+}
+
+.about-hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.about-hero:hover .about-hero-image {
+  transform: scale(1.02);
+}
+
+.about-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(10, 10, 30, 0.3) 0%, rgba(10, 10, 30, 0.6) 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.about-hero-overlay h1 {
+  font-family: 'Lora', serif;
+  font-style: italic;
+  font-size: 52px;
+  font-weight: 400;
+  color: white;
+  letter-spacing: 0.01em;
+  text-align: center;
+  padding: 0 24px;
+}
+
+.about-section {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 30px 24px;
+  text-align: center;
+}
+
+.about-section h2 {
+  font-family: 'Lora', serif;
+  font-size: 32px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #1a1a2e;
+}
+
+.about-section p {
+  font-size: 17px;
+  line-height: 1.85;
+  color: #555e6e;
+}
+
+.about-section + .about-section {
+  border-top: 1px solid #eef0f4;
+}
+
+.about-stats {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  padding: 30px 24px;
+  flex-wrap: wrap;
+}
+
+.about-stat-card {
+  width: 220px;
+  padding: 36px 24px;
+  border-radius: 16px;
+  background: #fff;
+  border: 1px solid #e8ecf3;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.about-stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.07);
+}
+
+.about-stat-card h2 {
+  font-family: 'Lora', serif;
+  font-size: 46px;
+  font-weight: 600;
+  color: #2563eb;
+  margin-bottom: 8px;
+  line-height: 1;
+}
+
+.about-stat-card p {
+  font-size: 15px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+@media (max-width: 768px) {
+  .about-hero {
+    height: 360px;
+  }
+
+  .about-hero-overlay h1 {
+    font-size: 34px;
+  }
+
+  .about-section {
+    padding: 48px 20px;
+  }
+
+  .about-section h2 {
+    font-size: 26px;
+  }
+
+  .about-section p {
+    font-size: 15px;
+  }
+
+  .about-stat-card {
+    width: 100%;
+    max-width: 300px;
+  }
+}
