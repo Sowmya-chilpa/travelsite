@@ -218,7 +218,7 @@ function Header() {
                                         {subArray.map((sub, i) => (
                                             <Link
                                                 key={i}
-                                                to={`${nav.path}/${sub.path}`}
+                                                to={`/${sub.path}`}
                                                 style={{
                                                     display: "block",
                                                     padding: "8px 12px",
