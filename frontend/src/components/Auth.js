@@ -18,7 +18,7 @@ const Auth = () => {
   const [message, setMessage] = useState("");
   const [aemData, setAemData] = useState(null);
   const [imageUrl, setImageUrl] = useState("");
-  const API_URL = "http://localhost:5000/api/auth";
+  const API_URL = "https://travelsite-o5le.onrender.com/api/auth";
 
   const navigate = useNavigate();
 
