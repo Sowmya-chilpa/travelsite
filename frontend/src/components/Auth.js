@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
 import "./Auth.css";
 
 const AEM_HOST = "https://katrina-nonmonogamous-pseudofamously.ngrok-free.dev";
@@ -15,7 +16,6 @@ const Auth = () => {
     confirmPassword: "",
   });
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
   const [aemData, setAemData] = useState(null);
   const [imageUrl, setImageUrl] = useState("");
   const API_URL = "https://travelsite-o5le.onrender.com/api/auth";
@@ -111,14 +111,13 @@ const Auth = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setMessage("");
     try {
       if (activeTab === "signup") {
         if (
           formData.password !==
           formData.confirmPassword
         ) {
-          setMessage("Passwords do not match");
+          toast.error("Passwords do not match");
           setLoading(false);
           return;
         }
@@ -139,7 +138,7 @@ const Auth = () => {
           }
         );
         const data = await res.json();
-        setMessage(data.message);
+        toast.success(data.message);
         if (res.ok) {
 
           setFormData({
@@ -150,7 +149,9 @@ const Auth = () => {
             password: "",
             confirmPassword: "",
           });
-          setActiveTab("login");
+          setTimeout(() => {
+            setActiveTab("login");
+          }, 0);
         }
       }
       else {
@@ -177,15 +178,17 @@ const Auth = () => {
             "user",
             JSON.stringify(data.user)
           );
-          setMessage("Login Successful");
-          navigate("/profile");
+          toast.success("Login Successful");
+          setTimeout(() => {
+            navigate("/profile");
+          }, 1000);
         } else {
-          setMessage(data.message);
+          toast.error(data.message);
         }
       }
     } catch (error) {
       console.log(error);
-      setMessage("Something went wrong");
+      toast.error("Something went wrong");
     }
     setLoading(false);
   };
@@ -196,6 +199,10 @@ const Auth = () => {
 
   return (
     <div className="auth-page">
+      <Toaster
+        position="top-center"
+        reverseOrder={false}
+      />
       <div className="auth-container">
         <div className="auth-left">
           <div className="auth-logo">
@@ -205,13 +212,13 @@ const Auth = () => {
           <div className="auth-tabs">
             <button
               className={activeTab === "signup" ? "active" : ""}
-              onClick={() => setActiveTab("signup")}
+              onClick={() => { setActiveTab("signup") }}
             >
               Sign Up
             </button>
             <button
               className={activeTab === "login" ? "active" : ""}
-              onClick={() => setActiveTab("login")}
+              onClick={() => { setActiveTab("login") }}
             >
               Log In
             </button>
@@ -222,12 +229,7 @@ const Auth = () => {
                 ? aemData.logintitle
                 : aemData.signuptitle}
             </h1>
-            <div  className="auth-subtitle">
-              {message && (
-                <p className="auth-message">
-                  {message}
-                </p>
-              )}
+            <div className="auth-subtitle">
               {activeTab === "login"
                 ? aemData.loginsubtitle?.plaintext
                 : aemData.signupsubtitle?.plaintext}
