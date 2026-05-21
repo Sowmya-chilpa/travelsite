@@ -16,32 +16,13 @@ const registerUser = async (req, res) => {
       user,
     });
 
-  }  catch (error) {
+  } catch (error) {
 
-  console.log(error);
-
-  if (
-    error.code === 11000 &&
-    error.message.includes("email")
-  ) {
-    return res.status(400).json({
-      message: "User with this email already exists",
+    res.status(500).json({
+      message: error.message,
     });
-  }
 
-  if (
-    error.code === 11000 &&
-    error.message.includes("phone_number")
-  ) {
-    return res.status(400).json({
-      message: "User with this phone number already exists",
-    });
   }
-
-  return res.status(500).json({
-    message: "Something went wrong",
-  });
-}
 
 };
 
