@@ -12,12 +12,24 @@ const registerService = async ({
   password,
 }) => {
 
-  const existingUser = await User.findOne({
-    email,
+  const existingEmail = await User.findOne({
+    email
   });
 
-  if (existingUser) {
-    throw new Error("User already exists");
+  if (existingEmail) {
+    throw new Error(
+      "User with this email already exists"
+    );
+  }
+
+  const existingPhone = await User.findOne({
+    phone_number
+  });
+
+  if (existingPhone) {
+    throw new Error(
+      "User with this phone number already exists"
+    );
   }
 
   const salt = await bcrypt.genSalt(10);
@@ -45,7 +57,7 @@ const loginService = async ({
 }) => {
 
 
- const user = await User.findOne({
+  const user = await User.findOne({
     email,
   });
 
