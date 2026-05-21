@@ -222,7 +222,7 @@ const Auth = () => {
                 ? aemData.logintitle
                 : aemData.signuptitle}
             </h1>
-            <p className="auth-subtitle">
+            <div  className="auth-subtitle">
               {message && (
                 <p className="auth-message">
                   {message}
@@ -231,7 +231,7 @@ const Auth = () => {
               {activeTab === "login"
                 ? aemData.loginsubtitle?.plaintext
                 : aemData.signupsubtitle?.plaintext}
-            </p>
+            </div >
             <form
               className="auth-form"
               onSubmit={handleSubmit}
@@ -244,6 +244,7 @@ const Auth = () => {
                     name="first_name"
                     placeholder="First Name"
                     onChange={handleChange}
+                    value={formData.first_name}
                   />
 
                   <input
@@ -251,6 +252,7 @@ const Auth = () => {
                     name="last_name"
                     placeholder="Last Name"
                     onChange={handleChange}
+                    value={formData.last_name}
                   />
 
                 </div>
@@ -260,6 +262,7 @@ const Auth = () => {
                 name="email"
                 placeholder="Email Address"
                 onChange={handleChange}
+                value={formData.email}
               />
               {activeTab === "signup" && (
                 <input
@@ -267,6 +270,7 @@ const Auth = () => {
                   name="phone_number"
                   placeholder="Phone Number"
                   onChange={handleChange}
+                  value={formData.phone_number}
                 />
               )}
               <input
@@ -274,6 +278,7 @@ const Auth = () => {
                 name="password"
                 placeholder="Password"
                 onChange={handleChange}
+                value={formData.password}
               />
               {activeTab === "signup" && (
                 <input
@@ -281,6 +286,7 @@ const Auth = () => {
                   name="confirmPassword"
                   placeholder="Confirm Password"
                   onChange={handleChange}
+                  value={formData.confirmPassword}
                 />
               )}
               <div className="auth-options">
