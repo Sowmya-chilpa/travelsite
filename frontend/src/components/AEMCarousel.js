@@ -4,7 +4,7 @@ import { FiPauseCircle } from "react-icons/fi";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 
-const AEM_HOST = "https://katrina-nonmonogamous-pseudofamously.ngrok-free.dev";
+const AEM_HOST = process.env.REACT_APP_AEM_HOST;
 const ENDPOINT = `${AEM_HOST}/content/cq:graphql/TDTraining/endpoint.json`;
 
 function AEMImage({ src, alt }) {

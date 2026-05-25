@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import "./Packages.css";
 
-const AEM_HOST = "https://katrina-nonmonogamous-pseudofamously.ngrok-free.dev";
+const AEM_HOST = process.env.REACT_APP_AEM_HOST;
 
 const PackageCard = ({ item }) => {
   const [imgSrc, setImgSrc] = useState("https://placehold.co/400x220");

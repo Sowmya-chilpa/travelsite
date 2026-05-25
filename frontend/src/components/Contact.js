@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import AEMImage from "../components/AEMImage";
 import "./Contact.css";
 
-const AEM_HOST = "https://katrina-nonmonogamous-pseudofamously.ngrok-free.dev";
+const AEM_HOST = process.env.REACT_APP_AEM_HOST;
 const ENDPOINT = `${AEM_HOST}/content/cq:graphql/TDTraining/endpoint.json`;
 
 const Contact = () => {
