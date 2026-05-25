@@ -89,7 +89,6 @@ const forgotPasswordService =
     await user.save();
 
     const resetLink = `${process.env.FRONTEND_URL}/reset-password/${resetToken}`
-    console.log("resetLink", resetLink);
     await sendEmail(
       email,
       "Reset Password",
