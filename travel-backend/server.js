@@ -6,7 +6,7 @@ const connectDB = require("./config/db");
 
 const authRoutes = require("./routes/authRoutes");
 const chatRoutes = require("./routes/chatRoutes");
-const wishlistRoutes = require("./routes/wishlistRoutes");
+const wishlistRoutes = require("./routes/wishlistroutes");
 
 
 const app = express();
