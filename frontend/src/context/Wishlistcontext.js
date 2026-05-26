@@ -23,7 +23,7 @@ export const WishlistProvider = ({ children }) => {
         } catch (err) {
             console.error("Failed to fetch wishlist", err);
         }
-    }, [])
+    }, [API_URL])
 
     useEffect(() => {
         fetchWishlist();
