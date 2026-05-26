@@ -32,7 +32,6 @@ const wishlistSchema = new mongoose.Schema(
     }
 );
 
-// Prevent duplicate wishlist entries per user
 wishlistSchema.index({ user: 1, packagetitle: 1 }, { unique: true });
 
 module.exports = mongoose.model("Wishlist", wishlistSchema);
