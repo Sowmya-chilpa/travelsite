@@ -12,6 +12,7 @@ import Contact from './components/Contact';
 import TravelPolicies from './components/TravelPolicies';
 import TravelStories from './pages/TravelStories';
 import Destinations from './components/Destinations';
+import Wishlist from './components/Wishlist';
 import ForgotPassword from './components/ForgotPassword';
 import ResetPassword from './components/ResetPassword';
 
@@ -19,11 +20,11 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-      <ScrollToTop />
+        <ScrollToTop />
         <Routes>
           <Route path="login" element={<Auth />} />
-          <Route path="forgot-password" element={<ForgotPassword />}/>
-          <Route path="/reset-password/:token" element={<ResetPassword />}/>
+          <Route path="forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password/:token" element={<ResetPassword />} />
           <Route path="/" element={<MainLayout />}>
             <Route index element={<Home />} />
             <Route path='/trip' element={<TripPlan />} />
@@ -32,8 +33,10 @@ function App() {
             <Route path="about" element={<About />} />
             <Route path="contact" element={<Contact />} />
             <Route path="sub1" element={<TravelStories />} />
-            <Route path="sub2" element={<TravelPolicies />}/>
-            <Route path="destinations"  element={<Destinations isCarousel={false} />} />
+            <Route path="sub2" element={<TravelPolicies />} />
+            <Route path="destinations" element={<Destinations isCarousel={false} />} />
+            <Route path="wishlist" element={<Wishlist />} />
+
           </Route>
         </Routes>
       </BrowserRouter>

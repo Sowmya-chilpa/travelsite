@@ -7,8 +7,13 @@ import { FaStar, FaTrophy } from "react-icons/fa";
 import { MdOutlinePrivacyTip, MdPayment, MdPerson } from "react-icons/md";
 import { CiHeadphones, CiLock } from "react-icons/ci";
 import { HiOutlineBadgeCheck } from "react-icons/hi";
+import { useWishlist } from "../context/Wishlistcontext";
+import { Link } from "react-router-dom";
+import Wishlist from "./Wishlist";
 
 const Profile = () => {
+  const { wishlist } = useWishlist();
+
   return (
     <div className="profile-page">
       <section
@@ -32,7 +37,7 @@ const Profile = () => {
               <h1>Sowmya Chilpa</h1>
               <p className="role">Adventure Explorer</p>
               <div className="meta-row">
-                <span><GrLocationPin/> Hyderabad, India</span>
+                <span><GrLocationPin /> Hyderabad, India</span>
                 <span>Member since Jan 2024</span>
               </div>
               <p className="bio">
@@ -46,23 +51,26 @@ const Profile = () => {
 
       <section className="stats-grid">
         <div className="stat-card">
-          <div className="stat-icon"><RiFlightTakeoffLine style={{color:"blue"}}/></div>
+          <div className="stat-icon"><RiFlightTakeoffLine style={{ color: "blue" }} /></div>
           <div><h2>12</h2><p>Trips Completed</p></div>
         </div>
         <div className="stat-card">
           <div className="stat-icon"><FcGlobe /></div>
           <div><h2>5</h2><p>Countries Explored</p></div>
         </div>
+        <Link to="/wishlist">
+          <div className="stat-card">
+            <div className="stat-icon"><IoIosHeart style={{ color: "red" }} /></div>
+            <div><h2>{wishlist.length}</h2><p>Wishlist Packages</p></div>
+          </div>
+        </Link>
+
         <div className="stat-card">
-          <div className="stat-icon"><IoIosHeart style={{color:"red"}}/></div>
-          <div><h2>18</h2><p>Wishlist Packages</p></div>
-        </div>
-        <div className="stat-card">
-          <div className="stat-icon"><FaStar style={{color:"gold"}}/></div>
+          <div className="stat-icon"><FaStar style={{ color: "gold" }} /></div>
           <div><h2>24</h2><p>Reviews Shared</p></div>
         </div>
         <div className="stat-card">
-          <div className="stat-icon"><FaTrophy style={{color:"blue"}}/></div>
+          <div className="stat-icon"><FaTrophy style={{ color: "blue" }} /></div>
           <div><h2>1,250</h2><p>Wanderer Points</p></div>
         </div>
       </section>
@@ -78,7 +86,7 @@ const Profile = () => {
             <div className="trip-info">
               <h4>Japan Cultural Tour</h4>
               <p>24 May – 31 May 2025</p>
-              <p className="trip-travelers"><IoMdPeople style={{color:"black"}}/> 2 Travelers</p>
+              <p className="trip-travelers"><IoMdPeople style={{ color: "black" }} /> 2 Travelers</p>
             </div>
             <span className="status confirmed">Confirmed</span>
           </div>
@@ -87,7 +95,7 @@ const Profile = () => {
             <div className="trip-info">
               <h4>Goa Beach Escape</h4>
               <p>10 Jun – 15 Jun 2025</p>
-              <p className="trip-travelers"><IoMdPeople style={{color:"black"}}/> 3 Travelers</p>
+              <p className="trip-travelers"><IoMdPeople style={{ color: "black" }} /> 3 Travelers</p>
             </div>
             <span className="status pending">Pending</span>
           </div>
@@ -96,41 +104,14 @@ const Profile = () => {
             <div className="trip-info">
               <h4>Manali Snow Trek</h4>
               <p>05 Jun – 10 Jul 2025</p>
-              <p className="trip-travelers"><MdPerson style={{color:"black"}}/> 1 Traveler</p>
+              <p className="trip-travelers"><MdPerson style={{ color: "black" }} /> 1 Traveler</p>
             </div>
             <span className="status confirmed">Confirmed</span>
           </div>
         </div>
 
         <div className="dashboard-card">
-          <div className="card-header">
-            <h3>Wishlist</h3>
-            <button>View all →</button>
-          </div>
-          <div className="wishlist-item">
-            <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=600" alt="" />
-            <div className="wishlist-info">
-              <h4>Bali Exotic Getaway</h4>
-              <p>₹62,000 / person</p>
-            </div>
-            <span className="heart"><IoIosHeart style={{color:"red"}}/></span>
-          </div>
-          <div className="wishlist-item">
-            <img src="https://images.unsplash.com/photo-1505765050516-f72dcac9c60b?q=80&w=600" alt="" />
-            <div className="wishlist-info">
-              <h4>Santorini Island Tour</h4>
-              <p>₹85,000 / person</p>
-            </div>
-            <span className="heart"><IoIosHeart style={{color:"red"}}/></span>
-          </div>
-          <div className="wishlist-item">
-            <img src="https://images.unsplash.com/photo-1527631746610-bca00a040d60?q=80&w=600" alt="" />
-            <div className="wishlist-info">
-              <h4>Switzerland Highlights</h4>
-              <p>₹1,25,000 / person</p>
-            </div>
-            <span className="heart"><IoIosHeart style={{color:"red"}}/></span>
-          </div>
+          <Wishlist />
         </div>
       </div>
 
@@ -216,11 +197,11 @@ const Profile = () => {
         <div className="dashboard-card settings-card">
           <h3>Account Settings</h3>
           <ul className="settings-list">
-            <li className="active-setting"><MdPerson style={{color:"black"}}/> Personal Information</li>
+            <li className="active-setting"><MdPerson style={{ color: "black" }} /> Personal Information</li>
             <li><CiLock /> Password &amp; Security</li>
             <li><IoIosNotificationsOutline /> Notifications</li>
             <li><MdPayment />Payment Methods</li>
-            <li><GrLocationPin/> Address Book</li>
+            <li><GrLocationPin /> Address Book</li>
             <li><FcGlobe /> Language &amp; Currency</li>
             <li><MdOutlinePrivacyTip /> Privacy &amp; Preferences</li>
           </ul>
@@ -264,7 +245,7 @@ const Profile = () => {
         <div className="feature-card"><CiHeadphones /> 24/7 Support<br /><span style={{ fontWeight: 400, fontSize: '10px', color: '#9ca3af' }}>We're here to help you anytime</span></div>
         <div className="feature-card"><HiOutlineBadgeCheck /> Best Price Guarantee<br /><span style={{ fontWeight: 400, fontSize: '10px', color: '#9ca3af' }}>Get the best deals always</span></div>
         <div className="feature-card"><MdPayment /> Secure Payments<br /><span style={{ fontWeight: 400, fontSize: '10px', color: '#9ca3af' }}>100% secure and safe</span></div>
-        <div className="feature-card"><FaStar style={{color:"gold"}}/> Trusted by Travelers<br /><span style={{ fontWeight: 400, fontSize: '10px', color: '#9ca3af' }}>4.9/5 from 10,000+ reviews</span></div>
+        <div className="feature-card"><FaStar style={{ color: "gold" }} /> Trusted by Travelers<br /><span style={{ fontWeight: 400, fontSize: '10px', color: '#9ca3af' }}>4.9/5 from 10,000+ reviews</span></div>
       </section>
 
     </div>

@@ -1,7 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import { FiSearch, FiMenu, FiX, FiChevronDown } from "react-icons/fi";
+import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import UserProfile from "../components/UserProfile";
+import { useWishlist } from "../context/Wishlistcontext";
 
 const AEM_HOST = process.env.REACT_APP_AEM_HOST;
 const ENDPOINT = `${AEM_HOST}/content/cq:graphql/TDTraining/endpoint.json`;
@@ -53,8 +55,11 @@ function Header() {
     const timeoutRef = useRef(null);
     const [menuOpen, setMenuOpen] = useState(false);
     const [mobileExpandedIndex, setMobileExpandedIndex] = useState(null);
-
     const [isMobile, setIsMobile] = useState(() => window.innerWidth < 900);
+
+    const { wishlist } = useWishlist();
+    const isLoggedIn = !!localStorage.getItem("token");
+
 
     useEffect(() => {
         const handleResize = () => setIsMobile(window.innerWidth < 900);
@@ -154,7 +159,6 @@ function Header() {
             }}>
 
                 <div style={{ display: "flex", alignItems: "center", gap: 20, minWidth: 0 }}>
-
                     <div style={{ flexShrink: 0 }}>
                         <AEMImage
                             src={`${AEM_HOST}${logo._path}`}
@@ -266,6 +270,39 @@ function Header() {
                         </div>
                     )}
 
+                    {isLoggedIn && (
+                        <Link
+                            to="/wishlist"
+                            style={{ position: "relative", color: "white", display: "flex", alignItems: "center" }}
+                            title="My Wishlist"
+                        >
+                            {wishlist.length > 0
+                                ? <AiFillHeart size={24} color="white" />
+                                : <AiOutlineHeart size={24} color="white" />
+                            }
+                            {wishlist.length > 0 && (
+                                <span style={{
+                                    position: "absolute",
+                                    top: -6,
+                                    right: -6,
+                                    background: "#e53e3e",
+                                    color: "white",
+                                    fontSize: 10,
+                                    fontWeight: 700,
+                                    borderRadius: "50%",
+                                    width: 16,
+                                    height: 16,
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    lineHeight: 1,
+                                }}>
+                                    {wishlist.length}
+                                </span>
+                            )}
+                        </Link>
+                    )}
+
                     <UserProfile />
 
                     {isMobile && (
@@ -311,6 +348,45 @@ function Header() {
                             />
                         </div>
                     </div>
+
+                    {isLoggedIn && (
+                        <div style={{ borderBottom: "1px solid #3d6070" }}>
+                            <Link
+                                to="/wishlist"
+                                style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    gap: 8,
+                                    padding: "12px 20px",
+                                    color: "white",
+                                    textDecoration: "none",
+                                }}
+                                onClick={() => setMenuOpen(false)}
+                            >
+                                {wishlist.length > 0
+                                    ? <AiFillHeart size={18} />
+                                    : <AiOutlineHeart size={18} />
+                                }
+                                My Wishlist
+                                {wishlist.length > 0 && (
+                                    <span style={{
+                                        background: "#e53e3e",
+                                        color: "white",
+                                        fontSize: 10,
+                                        fontWeight: 700,
+                                        borderRadius: "50%",
+                                        width: 18,
+                                        height: 18,
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                    }}>
+                                        {wishlist.length}
+                                    </span>
+                                )}
+                            </Link>
+                        </div>
+                    )}
 
                     {navArray.map((nav, index) => {
                         const isExpanded = mobileExpandedIndex === index;

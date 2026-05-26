@@ -1,44 +1,15 @@
+//packages.js
+
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import "./Packages.css";
+import { PackageCard } from "./Packagecard";
 
 const AEM_HOST = process.env.REACT_APP_AEM_HOST;
 
-const PackageCard = ({ item }) => {
-  const [imgSrc, setImgSrc] = useState("https://placehold.co/400x220");
-
-  useEffect(() => {
-    if (!item.coverimage?._path) return;
-    fetch(`${AEM_HOST}${item.coverimage._path}`, {
-      headers: {
-        Authorization: "Basic " + btoa("admin:admin"),
-        "ngrok-skip-browser-warning": "true",
-      },
-    })
-      .then((r) => r.blob())
-      .then((blob) => setImgSrc(URL.createObjectURL(blob)));
-  }, [item.coverimage]);
-
-  return (
-    <div className="package-container-card">
-      <div className="package-container-card-img">
-        <img src={imgSrc} alt={item.packagetitle} />
-        <span className="package-container-badge">{item.duration}</span>
-      </div>
-      <div className="package-container-card-body">
-        <h3>{item.packagetitle}</h3>
-        <p className="package-container-desc">{item.shortdescription?.plaintext}</p>
-        <div className="package-container-card-footer">
-          <span className="package-container-price">₹{item.priceperperson}</span>
-          <button>Explore</button>
-        </div>
-      </div>
-    </div>
-  );
-};
 
 const Packages = () => {
-   const location = useLocation();
+  const location = useLocation();
 
   const queryParams = new URLSearchParams(location.search);
   const typeFromUrl = queryParams.get("type");
@@ -51,7 +22,7 @@ const Packages = () => {
       setFilter(typeFromUrl);
     }
   }, [typeFromUrl]);
-  
+
   useEffect(() => {
     fetch(`${AEM_HOST}/content/cq:graphql/TDTraining/endpoint.json`, {
       method: "POST",
@@ -87,8 +58,8 @@ const Packages = () => {
     filter === "all"
       ? data
       : data.filter(
-          (item) => item.category?.trim().toLowerCase() === filter
-        );
+        (item) => item.category?.trim().toLowerCase() === filter
+      );
 
   return (
     <div className="package-container">
