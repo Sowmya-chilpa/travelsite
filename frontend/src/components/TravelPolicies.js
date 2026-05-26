@@ -8,13 +8,13 @@ const ENDPOINT = `${AEM_HOST}/content/cq:graphql/TDTraining/endpoint.json`;
 function TravelPolicies() {
 
   const [policyData, setPolicyData] = useState(null);
-    useEffect(() => {
-      fetchPolicies();
-    }, []);
+  useEffect(() => {
+    fetchPolicies();
+  }, []);
 
-    const fetchPolicies = async () => {
-      const query = {
-        query: `
+  const fetchPolicies = async () => {
+    const query = {
+      query: `
           {
             travelpoliciesmodelList {
               items {
@@ -50,29 +50,28 @@ function TravelPolicies() {
             }
           }
         `
-      };
-
-      try {
-        const response = await fetch(ENDPOINT, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Basic " + btoa("admin:admin"),
-            "ngrok-skip-browser-warning": "true",
-          },
-          body: JSON.stringify(query),
-        });
-        const result = await response.json();
-        console.log(result);
-        const item = result?.data?.travelpoliciesmodelList?.items?.[0];
-        if (item) {
-          setPolicyData(item);
-        }
-
-      } catch (error) {
-        console.error("Error fetching policies:", error);
-      }
     };
+
+    try {
+      const response = await fetch(ENDPOINT, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Basic " + btoa("admin:admin"),
+          "ngrok-skip-browser-warning": "true",
+        },
+        body: JSON.stringify(query),
+      });
+      const result = await response.json();
+      const item = result?.data?.travelpoliciesmodelList?.items?.[0];
+      if (item) {
+        setPolicyData(item);
+      }
+
+    } catch (error) {
+      console.error("Error fetching policies:", error);
+    }
+  };
 
   if (!policyData) {
     return (

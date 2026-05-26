@@ -4,7 +4,6 @@ import { BsChatDots } from "react-icons/bs";
 import { FiSend, FiX } from "react-icons/fi";
 
 export default function Chatbot({ user }) {
-    console.log(user)
     const [open, setOpen] = useState(false);
     const [messages, setMessages] = useState([]);
     const [input, setInput] = useState("");

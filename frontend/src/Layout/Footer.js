@@ -43,7 +43,6 @@ const Footer = () => {
     })
       .then((res) => res.json())
       .then((resData) => {
-        console.log("API RESPONSE:", resData);
 
         if (resData.data && resData.data.footermodelList) {
           setData(resData.data.footermodelList.items[0]);
