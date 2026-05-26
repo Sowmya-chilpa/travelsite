@@ -43,6 +43,14 @@ const userSchema = new mongoose.Schema(
       default: "traveler",
     },
 
+    resetToken: {
+      type: String,
+    },
+
+    resetTokenExpiry: {
+      type: Date,
+    },
+
   },
   {
     timestamps: true,

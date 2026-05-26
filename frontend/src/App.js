@@ -13,6 +13,8 @@ import TravelPolicies from './components/TravelPolicies';
 import TravelStories from './pages/TravelStories';
 import Destinations from './components/Destinations';
 import Wishlist from './components/Wishlist';
+import ForgotPassword from './components/ForgotPassword';
+import ResetPassword from './components/ResetPassword';
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
         <ScrollToTop />
         <Routes>
           <Route path="login" element={<Auth />} />
+          <Route path="forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password/:token" element={<ResetPassword />} />
           <Route path="/" element={<MainLayout />}>
             <Route index element={<Home />} />
             <Route path='/trip' element={<TripPlan />} />
