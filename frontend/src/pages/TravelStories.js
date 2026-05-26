@@ -60,7 +60,6 @@ function TravelStories() {
 
       const result = await response.json();
 
-      console.log(result);
 
       const items =
         result?.data?.experiencestorymodelList?.items || [];

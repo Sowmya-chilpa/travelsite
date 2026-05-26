@@ -19,11 +19,8 @@ app.use(express.json());
 
 app.use("/api/auth", authRoutes);
 app.use("/api/chat", chatRoutes);
-
 app.use("/api/wishlist", wishlistRoutes);
-app.get("/", (req, res) => {
-  res.send("Travel Backend Running");
-});
+
 
 const PORT = process.env.PORT || 5000;
 

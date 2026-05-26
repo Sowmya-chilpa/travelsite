@@ -42,7 +42,6 @@ function UserProfile() {
         })
             .then((res) => res.json())
             .then((data) => {
-                console.log(data)
                 setProfile(data.data.userProfileModelList.items[0]);
                 setLoading(false);
             })
