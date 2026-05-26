@@ -14,7 +14,6 @@ const addToWishlist = async (userId, packageData) => {
         user: userId,
         ...packageData,
     });
-
     await item.save();
     return item;
 };

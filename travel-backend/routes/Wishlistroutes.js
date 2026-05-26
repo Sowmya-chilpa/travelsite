@@ -3,7 +3,6 @@ const router = express.Router();
 const { addItem, removeItem, getItems } = require("../controllers/wishlistController");
 const authMiddleware = require("../middleware/authMiddleware");
 
-// All wishlist routes require authentication
 router.use(authMiddleware);
 
 router.get("/", getItems);
