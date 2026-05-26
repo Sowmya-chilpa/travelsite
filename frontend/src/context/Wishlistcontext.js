@@ -1,13 +1,13 @@
 //whishlistcontext.js
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
 
-const BACKEND = process.env.REACT_APP_API_URL;
 
 
 const WishlistContext = createContext(null);
 
 export const WishlistProvider = ({ children }) => {
     const [wishlist, setWishlist] = useState([]);
+    const API_URL = process.env.REACT_APP_API_URL;
 
     const getToken = () => localStorage.getItem("token");
 
@@ -15,7 +15,7 @@ export const WishlistProvider = ({ children }) => {
         const token = getToken();
         if (!token) return;
         try {
-            const res = await fetch(`${BACKEND}/wishlist`, {
+            const res = await fetch(`${API_URL}/wishlist`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
             const data = await res.json();
@@ -37,7 +37,7 @@ export const WishlistProvider = ({ children }) => {
         if (!token) return alert("Please login to save to wishlist");
 
         try {
-            const res = await fetch(`${BACKEND}/wishlist`, {
+            const res = await fetch(`${API_URL}/wishlist`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -60,7 +60,7 @@ export const WishlistProvider = ({ children }) => {
 
         try {
             const res = await fetch(
-                `${BACKEND}/wishlist/${encodeURIComponent(packagetitle)}`,
+                `${API_URL}/wishlist/${encodeURIComponent(packagetitle)}`,
                 {
                     method: "DELETE",
                     headers: { Authorization: `Bearer ${token}` },
