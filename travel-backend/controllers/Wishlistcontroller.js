@@ -2,7 +2,7 @@ const {
     addToWishlist,
     removeFromWishlist,
     getWishlist,
-} = require("../services/wishlistService");
+} = require("../services/wishlistservice");
 
 const addItem = async (req, res) => {
     try {
