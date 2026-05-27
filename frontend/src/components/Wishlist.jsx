@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import "./Wishlist.css";
 import { useWishlist } from "../context/Wishlistcontext";
 
-const AEM_HOST = process.env.REACT_APP_AEM_HOST;
+const AEM_HOST = "https://katrina-nonmonogamous-pseudofamously.ngrok-free.dev";
 
 const WishlistCard = ({ item }) => {
     const { removeFromWishlist } = useWishlist() || {};
