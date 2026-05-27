@@ -9,7 +9,7 @@ export default function Chatbot({ user }) {
     const [input, setInput] = useState("");
     const [loading, setLoading] = useState(false);
     const bottomRef = useRef(null);
-    const Base_API = "process.env.REACT_APP_API_URL"
+    const Base_API = process.env.REACT_APP_API_URL
 
     useEffect(() => {
         bottomRef.current?.scrollIntoView({ behavior: "smooth" });
