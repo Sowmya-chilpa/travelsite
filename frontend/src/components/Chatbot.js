@@ -9,6 +9,7 @@ export default function Chatbot({ user }) {
     const [input, setInput] = useState("");
     const [loading, setLoading] = useState(false);
     const bottomRef = useRef(null);
+    const Base_API = "process.env.REACT_APP_API_URL"
 
     useEffect(() => {
         bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -25,7 +26,7 @@ export default function Chatbot({ user }) {
         setLoading(true);
 
         try {
-            const res = await fetch(`${process.env.REACT_APP_API_BASE_URL}/chat`, {
+            const res = await fetch(`${Base_API}/chat`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
