@@ -1,4 +1,5 @@
-
+const dotenv = require('dotenv');
+dotenv.config();
 
 const chatService = async (messages, userContext = {}) => {
 
@@ -8,7 +9,7 @@ const chatService = async (messages, userContext = {}) => {
             && m.content !== ""
     );
 
-    const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+    const response = await fetch(`${process.env.CHATBOT_URL}`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
