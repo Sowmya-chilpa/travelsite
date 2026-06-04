@@ -4,6 +4,7 @@ import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import UserProfile from "../components/UserProfile";
 import { useWishlist } from "../context/Wishlistcontext";
+import SearchBar from "../components/SearchBar";
 
 const AEM_HOST = process.env.REACT_APP_AEM_HOST;
 const ENDPOINT = `${AEM_HOST}/content/cq:graphql/TDTraining/endpoint.json`;
@@ -249,7 +250,7 @@ function Header() {
                         </Link>
                     ))}
 
-                    {!isMobile && (
+                    {/* {!isMobile && (
                         <div style={{ position: "relative" }}>
                             <FiSearch size={18} style={{
                                 position: "absolute",
@@ -268,6 +269,12 @@ function Header() {
                                 }}
                             />
                         </div>
+                    )} */}
+
+                    {!isMobile && (
+
+                        <SearchBar />
+
                     )}
 
                     {isLoggedIn && (
@@ -325,7 +332,7 @@ function Header() {
                     zIndex: 100,
                     boxSizing: "border-box",
                 }}>
-                    <div style={{ padding: "12px 20px", borderBottom: "1px solid #3d6070" }}>
+                    {/* <div style={{ padding: "12px 20px", borderBottom: "1px solid #3d6070" }}>
                         <div style={{ position: "relative" }}>
                             <FiSearch size={16} style={{
                                 position: "absolute",
@@ -347,6 +354,12 @@ function Header() {
                                 }}
                             />
                         </div>
+                    </div> */}
+
+                    <div
+                        style={{ padding: "12px 20px", borderBottom: "1px solid #3d6070" }}
+                    >
+                        <SearchBar />
                     </div>
 
                     {isLoggedIn && (
@@ -431,7 +444,7 @@ function Header() {
                                         {subArray.map((sub, i) => (
                                             <Link
                                                 key={i}
-                                                to={`${nav.path}/${sub.path}`}
+                                                to={`/${sub.path}`}
                                                 style={{
                                                     display: "block",
                                                     padding: "10px 30px",
