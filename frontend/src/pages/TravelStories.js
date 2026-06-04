@@ -20,25 +20,18 @@ function TravelStories() {
       query: `
         {
           experiencestorymodelList {
-
             items {
-
               storyTitle
-
               storyDescription {
                 plaintext
               }
-
               storyImage {
                 ... on ImageRef {
                   _path
                 }
               }
-
               authorName
-
               travelLocation
-
               publishDate
             }
           }
@@ -47,7 +40,6 @@ function TravelStories() {
     };
 
     try {
-
       const response = await fetch(ENDPOINT, {
         method: "POST",
         headers: {
@@ -57,19 +49,12 @@ function TravelStories() {
         },
         body: JSON.stringify(query),
       });
-
       const result = await response.json();
-
-
-      const items =
-        result?.data?.experiencestorymodelList?.items || [];
-
+      const items = result?.data?.experiencestorymodelList?.items || [];
       setStories(items);
 
     } catch (error) {
-
       console.error("Error fetching stories:", error);
-
     }
   };
 
@@ -80,18 +65,10 @@ function TravelStories() {
       <h1 className="travelStoriesHeading">
         Travel Stories
       </h1>
-
       <div className="storiesGrid">
-
         {stories.map((story, index) => (
-
-          <StoryCard
-            key={index}
-            data={story}
-          />
-
+          <StoryCard key={index}  data={story} />
         ))}
-
       </div>
 
     </div>

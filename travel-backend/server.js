@@ -8,6 +8,8 @@ const connectDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
 const chatRoutes = require("./routes/chatRoutes");
 const wishlistRoutes = require('./routes/wishlistRoute')
+const searchRoutes = require("./routes/searchRoutes");
+
 
 const app = express();
 
@@ -21,6 +23,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/chat", chatRoutes);
 app.use("/api/wishlist", wishlistRoutes);
 
+app.use("/api/search", searchRoutes);
 
 const PORT = process.env.PORT || 5000;
 

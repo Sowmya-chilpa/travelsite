@@ -32,8 +32,8 @@ function App() {
             <Route path="packages" element={<Packages />} />
             <Route path="about" element={<About />} />
             <Route path="contact" element={<Contact />} />
-            <Route path="sub1" element={<TravelStories />} />
-            <Route path="sub2" element={<TravelPolicies />} />
+            <Route path="travelStories" element={<TravelStories />} />
+            <Route path="travelPolicies" element={<TravelPolicies />} />
             <Route path="destinations" element={<Destinations isCarousel={false} />} />
             <Route path="wishlist" element={<Wishlist />} />
 

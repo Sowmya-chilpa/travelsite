@@ -1,9 +1,10 @@
 import { useState, useEffect, useRef } from "react";
-import { FiSearch, FiMenu, FiX, FiChevronDown } from "react-icons/fi";
+import { FiMenu, FiX, FiChevronDown } from "react-icons/fi";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import UserProfile from "../components/UserProfile";
 import { useWishlist } from "../context/Wishlistcontext";
+import SearchBar from "../components/SearchBar";
 
 const AEM_HOST = process.env.REACT_APP_AEM_HOST;
 const ENDPOINT = `${AEM_HOST}/content/cq:graphql/TDTraining/endpoint.json`;
@@ -250,24 +251,9 @@ function Header() {
                     ))}
 
                     {!isMobile && (
-                        <div style={{ position: "relative" }}>
-                            <FiSearch size={18} style={{
-                                position: "absolute",
-                                top: "50%",
-                                left: 10,
-                                transform: "translateY(-50%)",
-                                color: "#555"
-                            }} />
-                            <input
-                                placeholder="Search..."
-                                style={{
-                                    padding: "6px 10px 6px 32px",
-                                    border: "1px solid #ccc",
-                                    borderRadius: 4,
-                                    width: "140px",
-                                }}
-                            />
-                        </div>
+
+                        <SearchBar />
+
                     )}
 
                     {isLoggedIn && (
@@ -325,28 +311,10 @@ function Header() {
                     zIndex: 100,
                     boxSizing: "border-box",
                 }}>
-                    <div style={{ padding: "12px 20px", borderBottom: "1px solid #3d6070" }}>
-                        <div style={{ position: "relative" }}>
-                            <FiSearch size={16} style={{
-                                position: "absolute",
-                                top: "50%",
-                                left: 10,
-                                transform: "translateY(-50%)",
-                                color: "#aaa"
-                            }} />
-                            <input
-                                placeholder="Search..."
-                                style={{
-                                    padding: "8px 10px 8px 32px",
-                                    border: "1px solid #4a7a8a",
-                                    borderRadius: 4,
-                                    width: "100%",
-                                    background: "#3d6070",
-                                    color: "white",
-                                    boxSizing: "border-box",
-                                }}
-                            />
-                        </div>
+                    <div
+                        style={{ padding: "12px 20px", borderBottom: "1px solid #3d6070" }}
+                    >
+                        <SearchBar />
                     </div>
 
                     {isLoggedIn && (
@@ -431,7 +399,7 @@ function Header() {
                                         {subArray.map((sub, i) => (
                                             <Link
                                                 key={i}
-                                                to={`${nav.path}/${sub.path}`}
+                                                to={`/${sub.path}`}
                                                 style={{
                                                     display: "block",
                                                     padding: "10px 30px",
