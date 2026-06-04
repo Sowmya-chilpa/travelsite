@@ -250,27 +250,6 @@ function Header() {
                         </Link>
                     ))}
 
-                    {/* {!isMobile && (
-                        <div style={{ position: "relative" }}>
-                            <FiSearch size={18} style={{
-                                position: "absolute",
-                                top: "50%",
-                                left: 10,
-                                transform: "translateY(-50%)",
-                                color: "#555"
-                            }} />
-                            <input
-                                placeholder="Search..."
-                                style={{
-                                    padding: "6px 10px 6px 32px",
-                                    border: "1px solid #ccc",
-                                    borderRadius: 4,
-                                    width: "140px",
-                                }}
-                            />
-                        </div>
-                    )} */}
-
                     {!isMobile && (
 
                         <SearchBar />
@@ -332,30 +311,6 @@ function Header() {
                     zIndex: 100,
                     boxSizing: "border-box",
                 }}>
-                    {/* <div style={{ padding: "12px 20px", borderBottom: "1px solid #3d6070" }}>
-                        <div style={{ position: "relative" }}>
-                            <FiSearch size={16} style={{
-                                position: "absolute",
-                                top: "50%",
-                                left: 10,
-                                transform: "translateY(-50%)",
-                                color: "#aaa"
-                            }} />
-                            <input
-                                placeholder="Search..."
-                                style={{
-                                    padding: "8px 10px 8px 32px",
-                                    border: "1px solid #4a7a8a",
-                                    borderRadius: 4,
-                                    width: "100%",
-                                    background: "#3d6070",
-                                    color: "white",
-                                    boxSizing: "border-box",
-                                }}
-                            />
-                        </div>
-                    </div> */}
-
                     <div
                         style={{ padding: "12px 20px", borderBottom: "1px solid #3d6070" }}
                     >

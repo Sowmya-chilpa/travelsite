@@ -91,7 +91,6 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  /* color: #2563eb; */
    color: rgb(110, 154, 177);
   margin-bottom: 10px;
 }
@@ -138,7 +137,6 @@
 
 .contact-form input:focus,
 .contact-form textarea:focus {
-  /* border-color: #2563eb; */
    border-color: rgb(110, 154, 177);
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
@@ -152,7 +150,6 @@
   padding: 14px 32px;
   border: none;
   border-radius: 10px;
-  /* background: #2563eb; */
   background: rgb(110, 154, 177);
   color: #fff;
   font-size: 15px;
@@ -163,7 +160,6 @@
 }
 
 .contact-form button:hover {
-  /* background: #1d4ed8; */
   background: rgb(110, 154, 177);
   transform: translateY(-1px);
 }

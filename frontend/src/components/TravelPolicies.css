@@ -111,7 +111,6 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  /* color: #2563eb; */
   color: rgb(110, 154, 177);
   margin-bottom: 14px;
 }
@@ -126,7 +125,6 @@
   .policies-hero {
     height: 360px;
   }
-
   .policies-overlay h1 {
     font-size: 34px;
   }
