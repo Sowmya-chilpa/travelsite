@@ -4,7 +4,6 @@ import searchContent from "../services/searchService";
 import SearchDropdown from "./SearchDropdown"; 
 import { FiSearch } from "react-icons/fi";
 import "./SearchBar.css";
-import { useNavigate } from "react-router-dom";
 
 function SearchBar(){
     const [searchTerm, setSearchTerm] = useState("");
@@ -12,7 +11,6 @@ function SearchBar(){
     const [loading, setLoading] = useState(false);
     const [showDropdown,setShowDropdown] = useState(false);
     const searchRef = useRef(null);
-    const navigate = useNavigate();
     const debouncedSearch = useDebounce(searchTerm,500);
 
     const handleResultClick = (result) => {

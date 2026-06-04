@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { FiSearch, FiMenu, FiX, FiChevronDown } from "react-icons/fi";
+import { FiMenu, FiX, FiChevronDown } from "react-icons/fi";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import UserProfile from "../components/UserProfile";
