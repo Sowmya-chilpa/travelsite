@@ -69,6 +69,33 @@ const loginService = async ({email,password,}) => {
       first_name: user.first_name,
       last_name: user.last_name,
       email: user.email,
+      phone_number: user.phone_number,
+    },
+  };
+};
+
+const updateProfileService = async (userId,data) => {
+  const user = await User.findById(userId);
+
+  if (!user) {
+    throw new Error(
+      "User not found"
+    );
+  }
+  user.first_name = data.first_name;
+  user.last_name = data.last_name;
+  user.phone_number = data.phone_number;
+  await user.save();
+
+  return {
+    message:
+      "Profile updated successfully",
+    user: {
+      id: user._id,
+      first_name:user.first_name,
+      last_name:user.last_name,
+      email:user.email,
+      phone_number:user.phone_number,
     },
   };
 };
@@ -136,6 +163,7 @@ const resetPasswordService =
 module.exports = {
   registerService,
   loginService,
+  updateProfileService,
   forgotPasswordService,
   resetPasswordService,
 };  

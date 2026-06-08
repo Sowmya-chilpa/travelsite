@@ -1,4 +1,4 @@
-const { registerService, loginService, forgotPasswordService, resetPasswordService, } = require("../services/authService");
+const { registerService, loginService, forgotPasswordService,updateProfileService,resetPasswordService, } = require("../services/authService");
 
 const registerUser = async (req, res) => {
   try {
@@ -28,6 +28,22 @@ const loginUser = async (req, res) => {
   } catch (error) {
     res.status(400).json({
       message: error.message,
+    });
+  }
+};
+
+const updateProfile = async (req, res) => {
+  try {
+    const result =
+      await updateProfileService(
+        req.user.id,
+        req.body
+      );
+    res.status(200).json(result);
+  } catch (error) {
+    res.status(400).json({
+      message:
+        error.message,
     });
   }
 };
@@ -64,6 +80,7 @@ const resetPassword = async (req, res) => {
 module.exports = {
   registerUser,
   loginUser,
+  updateProfile,
   forgotPassword,
   resetPassword,
 };
