@@ -9,7 +9,6 @@ import { CiHeadphones, CiLock } from "react-icons/ci";
 import { HiOutlineBadgeCheck } from "react-icons/hi";
 import { useWishlist } from "../context/Wishlistcontext";
 import { Link } from "react-router-dom";
-import Wishlist from "./Wishlist";
 import { useEffect, useState } from "react";
 
 const WishlistImage = ({ coverImagePath }) => {
@@ -42,15 +41,9 @@ const Profile = () => {
   useEffect(() => {
 
     const fetchBookings = async () => {
-
       try {
-
-        const token =
-          localStorage.getItem("token");
-
-        const res =
-          await fetch(
-            `${API_URL}/bookings/my-bookings`,
+        const token = localStorage.getItem("token");
+        const res =await fetch(`${API_URL}/bookings/my-bookings`,
             {
               headers: {
                 Authorization:
@@ -59,83 +52,56 @@ const Profile = () => {
             }
           );
 
-        const data =
-          await res.json();
-
+        const data = await res.json();
         setBookings(data);
-
       } catch (error) {
-
         console.log(error);
-
       }
     };
-
     fetchBookings();
-
-  }, []);
+  }, [API_URL]);
 
   const handleUpdateProfile = async () => {
     try {
-      const token =
-        localStorage.getItem("token");
+      const token = localStorage.getItem("token");
       const res = await fetch(
         `${API_URL}/auth/update-profile`,
         {
           method: "PUT",
-
           headers: {
             "Content-Type":
               "application/json",
-
             Authorization:
               `Bearer ${token}`,
           },
-
           body: JSON.stringify(
             formData
           ),
         }
       );
 
-      const data =
-        await res.json();
+      const data = await res.json();
 
       if (res.ok) {
-
         localStorage.setItem(
           "user",
           JSON.stringify(data.user)
         );
-
         setUser(data.user);
-
         setIsEditing(false);
-
-
       } else {
-
         alert(data.message);
-
       }
-
     } catch (error) {
-
       console.log(error);
-
     }
   };
 
   const handleCancelBooking = async (bookingId) => {
 
     try {
-
-      const token =
-        localStorage.getItem("token");
-
-      const res =
-        await fetch(
-          `${API_URL}/bookings/cancel/${bookingId}`,
+      const token = localStorage.getItem("token");
+      const res =await fetch(`${API_URL}/bookings/cancel/${bookingId}`,
           {
             method: "PUT",
             headers: {
@@ -143,11 +109,9 @@ const Profile = () => {
             },
           }
         );
-
       const data = await res.json();
 
       if (res.ok) {
-
         setBookings(
           bookings.map((booking) =>
             booking._id === bookingId
@@ -158,20 +122,14 @@ const Profile = () => {
               : booking
           )
         );
-
       } else {
-
         alert(data.message);
-
       }
-
     } catch (error) {
-
       console.log(error);
-
     }
-
   };
+
   return (
     <div className="profile-page">
       <section
@@ -201,11 +159,8 @@ const Profile = () => {
               {
                 isEditing && (
                   <div className="profile-edit-modal-overlay">
-
                     <div className="profile-edit-modal">
-
                       <h2>Edit Profile</h2>
-
                       <input
                         type="text"
                         placeholder="First Name"
@@ -218,7 +173,6 @@ const Profile = () => {
                           })
                         }
                       />
-
                       <input
                         type="text"
                         placeholder="Last Name"
@@ -231,7 +185,6 @@ const Profile = () => {
                           })
                         }
                       />
-
                       <input
                         type="text"
                         placeholder="Phone Number"
@@ -244,16 +197,13 @@ const Profile = () => {
                           })
                         }
                       />
-
                       <div className="profile-modal-buttons">
-
                         <button
                           className="profile-save-btn"
                           onClick={handleUpdateProfile}
                         >
                           Save Changes
                         </button>
-
                         <button
                           className="profile-cancel-btn"
                           onClick={() =>
@@ -262,11 +212,8 @@ const Profile = () => {
                         >
                           Cancel
                         </button>
-
                       </div>
-
                     </div>
-
                   </div>
                 )
               }
