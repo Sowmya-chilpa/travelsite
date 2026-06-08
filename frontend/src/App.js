@@ -15,6 +15,8 @@ import Destinations from './components/Destinations';
 import Wishlist from './components/Wishlist';
 import ForgotPassword from './components/ForgotPassword';
 import ResetPassword from './components/ResetPassword';
+import ProtectedRoute from './components/ProtectedRoute';
+import BookingPage from './components/BookingPage';
 
 function App() {
   return (
@@ -22,21 +24,21 @@ function App() {
       <BrowserRouter>
         <ScrollToTop />
         <Routes>
-          <Route path="login" element={<Auth />} />
+          <Route path="/login" element={<Auth />} />
           <Route path="forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password/:token" element={<ResetPassword />} />
           <Route path="/" element={<MainLayout />}>
             <Route index element={<Home />} />
             <Route path='/trip' element={<TripPlan />} />
-            <Route path='profile' element={<Profile />} />
+            <Route path='profile' element={<ProtectedRoute><Profile /></ProtectedRoute>} />
             <Route path="packages" element={<Packages />} />
             <Route path="about" element={<About />} />
             <Route path="contact" element={<Contact />} />
             <Route path="travelStories" element={<TravelStories />} />
             <Route path="travelPolicies" element={<TravelPolicies />} />
             <Route path="destinations" element={<Destinations isCarousel={false} />} />
-            <Route path="wishlist" element={<Wishlist />} />
-
+            <Route path="wishlist" element={<ProtectedRoute><Wishlist /></ProtectedRoute>} />
+            <Route path="/booking" element={<ProtectedRoute><BookingPage /></ProtectedRoute>}></Route>
           </Route>
         </Routes>
       </BrowserRouter>

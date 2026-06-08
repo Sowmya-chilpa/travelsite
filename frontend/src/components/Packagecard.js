@@ -2,13 +2,15 @@ import { useEffect, useState } from "react";
 import { useWishlist } from "../context/Wishlistcontext";
 import { FiHeart } from "react-icons/fi";
 import { AiFillHeart } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
 
-const AEM_HOST = "https://katrina-nonmonogamous-pseudofamously.ngrok-free.dev";
+const AEM_HOST = process.env.REACT_APP_AEM_HOST;
 
 export const PackageCard = ({ item }) => {
     const [imgSrc, setImgSrc] = useState("https://placehold.co/400x220");
     const { isWishlisted, toggleWishlist } = useWishlist();
     const wishlisted = isWishlisted(item.packagetitle);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (!item.coverimage?._path) return;
@@ -59,7 +61,9 @@ export const PackageCard = ({ item }) => {
                 </p>
                 <div className="package-container-card-footer">
                     <span className="package-container-price">₹{item.priceperperson}</span>
-                    <button>Explore</button>
+                    <button onClick={() => navigate("/booking", {state: {packageName:item.packagetitle,amount:item.priceperperson, duration:item.duration,},})}>
+                        Book Now
+                    </button>
                 </div>
             </div>
         </div>
