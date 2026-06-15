@@ -1,15 +1,10 @@
-import { GrLocationPin } from "react-icons/gr";
 import "./Profile.css";
-import { RiFlightTakeoffLine } from "react-icons/ri";
-import { FcGlobe } from "react-icons/fc";
-import { IoIosHeart, IoIosNotificationsOutline, IoMdPeople } from "react-icons/io";
-import { FaStar, FaTrophy } from "react-icons/fa";
-import { MdOutlinePrivacyTip, MdPayment, MdPerson } from "react-icons/md";
-import { CiHeadphones, CiLock } from "react-icons/ci";
-import { HiOutlineBadgeCheck } from "react-icons/hi";
 import { useWishlist } from "../context/Wishlistcontext";
-import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { IoMdPeople } from "react-icons/io";
+import { MdPerson } from "react-icons/md";
+import { CiLock } from "react-icons/ci";
+import { FcLock } from "react-icons/fc";
 
 const WishlistImage = ({ coverImagePath }) => {
   const [imgSrc, setImgSrc] = useState("https://placehold.co/60x48");
@@ -37,20 +32,23 @@ const Profile = () => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
   const [formData, setFormData] = useState({ first_name: user?.first_name || "", last_name: user?.last_name || "", phone_number: user?.phone_number || "" });
   const [bookings, setBookings] = useState([]);
+  const [passwordData, setPasswordData] = useState({ currentPassword: "", newPassword: "", confirmPassword: "" });
+  const [activeTab, setActiveTab] = useState("personal");
+  const [showPasswordModal, setShowPasswordModal] = useState(false);
 
   useEffect(() => {
 
     const fetchBookings = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res =await fetch(`${API_URL}/bookings/my-bookings`,
-            {
-              headers: {
-                Authorization:
-                  `Bearer ${token}`,
-              },
-            }
-          );
+        const res = await fetch(`${API_URL}/bookings/my-bookings`,
+          {
+            headers: {
+              Authorization:
+                `Bearer ${token}`,
+            },
+          }
+        );
 
         const data = await res.json();
         setBookings(data);
@@ -101,14 +99,14 @@ const Profile = () => {
 
     try {
       const token = localStorage.getItem("token");
-      const res =await fetch(`${API_URL}/bookings/cancel/${bookingId}`,
-          {
-            method: "PUT",
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+      const res = await fetch(`${API_URL}/bookings/cancel/${bookingId}`,
+        {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       const data = await res.json();
 
       if (res.ok) {
@@ -129,6 +127,88 @@ const Profile = () => {
       console.log(error);
     }
   };
+
+  const handleChangePassword =
+    async () => {
+
+      if (
+        passwordData.currentPassword ===
+        passwordData.newPassword
+      ) {
+        return alert(
+          "New password must be different from current password"
+        );
+      }
+
+      if (
+        passwordData.newPassword !==
+        passwordData.confirmPassword
+      ) {
+        return alert(
+          "Passwords do not match"
+        );
+      }
+
+      try {
+
+        const token =
+          localStorage.getItem(
+            "token"
+          );
+
+        const res = await fetch(
+          `${API_URL}/auth/change-password`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type":
+                "application/json",
+              Authorization:
+                `Bearer ${token}`
+            },
+            body: JSON.stringify({
+              currentPassword:
+                passwordData.currentPassword,
+              newPassword:
+                passwordData.newPassword
+            })
+          }
+        );
+
+        const data = await res.json();
+
+        if (res.ok) {
+
+          alert(data.message);
+
+          const updatedUser = {
+            ...user,
+            passwordChangedAt: new Date()
+          };
+
+          setUser(updatedUser);
+
+          localStorage.setItem(
+            "user",
+            JSON.stringify(updatedUser)
+          );
+
+          setPasswordData({
+            currentPassword: "",
+            newPassword: "",
+            confirmPassword: ""
+          });
+
+          setShowPasswordModal(false);
+
+        } else {
+          alert(data.message);
+        }
+
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
   return (
     <div className="profile-page">
@@ -222,65 +302,50 @@ const Profile = () => {
         </div>
       </section>
 
-      <section className="profile-stats-grid">
-        <div className="profile-stat-card">
-          <div className="profile-stat-icon"><RiFlightTakeoffLine style={{ color: "blue" }} /></div>
-          <div><h2>12</h2><p>Trips Completed</p></div>
-        </div>
-        <div className="profile-stat-card">
-          <div className="profile-stat-icon"><FcGlobe /></div>
-          <div><h2>5</h2><p>Countries Explored</p></div>
-        </div>
-        <Link to="/wishlist">
-          <div className="profile-stat-card">
-            <div className="profile-stat-icon"><IoIosHeart style={{ color: "red" }} /></div>
-            <div><h2>{wishlist.length}</h2><p>Wishlist Packages</p></div>
-          </div>
-        </Link>
-
-        <div className="profile-stat-card">
-          <div className="profile-stat-icon"><FaStar style={{ color: "gold" }} /></div>
-          <div><h2>24</h2><p>Reviews Shared</p></div>
-        </div>
-        <div className="profile-stat-card">
-          <div className="profile-stat-icon"><FaTrophy style={{ color: "blue" }} /></div>
-          <div><h2>1,250</h2><p>Wanderer Points</p></div>
-        </div>
-      </section>
-
       <div className="profile-main-grid">
         <div className="profile-dashboard-card">
           <div className="profile-card-header">
             <h3>Upcoming Trips</h3>
             <button>View all bookings →</button>
           </div>
-          <div className="profile-trip-item">
-            <img src="https://images.unsplash.com/photo-1526481280695-3c4691ecc8f7?q=80&w=600" alt="" />
-            <div className="profile-trip-info">
-              <h4>Japan Cultural Tour</h4>
-              <p>24 May – 31 May 2025</p>
-              <p className="profile-trip-travelers"><IoMdPeople style={{ color: "black" }} /> 2 Travelers</p>
-            </div>
-            <span className="profile-status confirmed">Confirmed</span>
-          </div>
-          <div className="profile-trip-item">
-            <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=600" alt="" />
-            <div className="profile-trip-info">
-              <h4>Goa Beach Escape</h4>
-              <p>10 Jun – 15 Jun 2025</p>
-              <p className="profile-trip-travelers"><IoMdPeople style={{ color: "black" }} /> 3 Travelers</p>
-            </div>
-            <span className="profile-status pending">Pending</span>
-          </div>
-          <div className="profile-trip-item">
-            <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=600" alt="" />
-            <div className="profile-trip-info">
-              <h4>Manali Snow Trek</h4>
-              <p>05 Jun – 10 Jul 2025</p>
-              <p className="profile-trip-travelers"><MdPerson style={{ color: "black" }} /> 1 Traveler</p>
-            </div>
-            <span className="profile-status confirmed">Confirmed</span>
-          </div>
+
+          {bookings.filter(
+            (booking) =>
+              booking.status !== "Cancelled"
+          ).length === 0 ? (
+            <p>No upcoming trips</p>
+          ) : (
+            bookings
+              .filter(
+                (booking) =>
+                  booking.status !== "Cancelled"
+              )
+              .map((booking) => (
+                <div
+                  className="profile-trip-item"
+                  key={booking._id}
+                >
+                  <div className="profile-trip-info">
+                    <h4>{booking.packageName}</h4>
+
+                    <p>
+                      {new Date(
+                        booking.travelDate
+                      ).toLocaleDateString()}
+                    </p>
+
+                    <p className="profile-trip-travelers">
+                      <IoMdPeople /> {booking.travellers} Traveller
+                      {booking.travellers > 1 ? "s" : ""}
+                    </p>
+                  </div>
+
+                  <span className="profile-status confirmed">
+                    {booking.status}
+                  </span>
+                </div>
+              ))
+          )}
         </div>
 
         <div className="profile-dashboard-card">
@@ -372,8 +437,8 @@ const Profile = () => {
                     <td>
                       <span
                         className={`profile-table-status ${booking.status === "Cancelled"
-                            ? "cancelled"
-                            : "completed"
+                          ? "cancelled"
+                          : "completed"
                           }`}
                       >
                         {booking.status}
@@ -384,7 +449,7 @@ const Profile = () => {
                       {
                         booking.status !== "Cancelled" && (
                           <button
-                          className="cancel-booking-btn"
+                            className="cancel-booking-btn"
                             onClick={() =>
                               handleCancelBooking(
                                 booking._id
@@ -408,57 +473,148 @@ const Profile = () => {
         <div className="profile-dashboard-card profile-settings-card">
           <h3>Account Settings</h3>
           <ul className="profile-settings-list">
-            <li className="profile-active-setting"><MdPerson style={{ color: "black" }} /> Personal Information</li>
-            <li><CiLock /> Password &amp; Security</li>
-            <li><IoIosNotificationsOutline /> Notifications</li>
-            <li><MdPayment />Payment Methods</li>
-            <li><GrLocationPin /> Address Book</li>
-            <li><FcGlobe /> Language &amp; Currency</li>
-            <li><MdOutlinePrivacyTip /> Privacy &amp; Preferences</li>
+            <li
+              className={
+                activeTab === "personal"
+                  ? "profile-active-setting"
+                  : ""
+              }
+              onClick={() => setActiveTab("personal")}
+            >
+              <MdPerson /> Personal Information
+            </li>
+
+            <li
+              className={
+                activeTab === "password"
+                  ? "profile-active-setting"
+                  : ""
+              }
+              onClick={() => setActiveTab("password")}
+            >
+              <CiLock /> Password & Security
+            </li>
           </ul>
         </div>
 
-        <div className="profile-dashboard-card personal-card">
-          <div className="profile-card-header">
-            <h3>Personal Information</h3>
-            <button>Edit</button>
-          </div>
-          <div className="profile-personal-grid">
-            <div className="profile-info-group">
-              <label>Full Name</label>
-              <p>Sowmya Chilpa</p>
+        {activeTab === "personal" && (
+          <div className="profile-dashboard-card personal-card">
+            <div className="profile-card-header">
+              <h3>Personal Information</h3>
             </div>
-            <div className="profile-info-group">
-              <label>Email Address</label>
-              <p>sowmya@example.com</p>
+            <div className="profile-personal-grid">
+              <div className="profile-info-group">
+                <label>Full Name</label>
+                <p>{user?.first_name} {user?.last_name}</p>
+              </div>
+              <div className="profile-info-group">
+                <label>Email Address</label>
+                <p>{user?.email}</p>
+              </div>
+              <div className="profile-info-group">
+                <label>Phone Number</label>
+                <p>{user?.phone_number}</p>
+              </div>
             </div>
-            <div className="profile-info-group">
-              <label>Phone Number</label>
-              <p>+91 98765 43210</p>
+          </div>)}
+        {activeTab === "password" && (
+          <>
+            <div className="profile-dashboard-card personal-card">
+              <div className="profile-card-header">
+                <h3><span><FcLock /></span>Security Center</h3>
+              </div>
+
+              <div >
+                <p>
+                  <strong>Last Password Update:</strong>{" "}
+                  {user?.passwordChangedAt
+                    ? new Date(user.passwordChangedAt).toLocaleDateString()
+                    : "Not Available"}
+                </p>
+
+                <button
+                  className="profile-edit-btn"
+                  style={{ backgroundColor: "#4c7388", color: "white" }}
+                  onClick={() => setShowPasswordModal(true)}
+                >
+                  Change Password
+                </button>
+              </div>
             </div>
-            <div className="profile-info-group">
-              <label>Date of Birth</label>
-              <p>12 March 1998</p>
-            </div>
-            <div className="profile-info-group">
-              <label>Nationality</label>
-              <p>Indian</p>
-            </div>
-            <div className="profile-info-group">
-              <label>Gender</label>
-              <p>Female</p>
-            </div>
-          </div>
-        </div>
+
+            {showPasswordModal && (
+              <div className="profile-edit-modal-overlay">
+                <div className="profile-edit-modal">
+                  <h2>Change Password</h2>
+
+                  <input
+                    type="password"
+                    placeholder="Current Password"
+                    value={passwordData.currentPassword}
+                    onChange={(e) =>
+                      setPasswordData({
+                        ...passwordData,
+                        currentPassword:
+                          e.target.value,
+                      })
+                    }
+                  />
+
+                  <input
+                    type="password"
+                    placeholder="New Password"
+                    value={passwordData.newPassword}
+                    onChange={(e) =>
+                      setPasswordData({
+                        ...passwordData,
+                        newPassword:
+                          e.target.value,
+                      })
+                    }
+                  />
+
+                  <input
+                    type="password"
+                    placeholder="Confirm Password"
+                    value={passwordData.confirmPassword}
+                    onChange={(e) =>
+                      setPasswordData({
+                        ...passwordData,
+                        confirmPassword:
+                          e.target.value,
+                      })
+                    }
+                  />
+
+                  <div className="profile-modal-buttons">
+                    <button
+                      className="profile-save-btn"
+                      onClick={handleChangePassword}
+                    >
+                      Update Password
+                    </button>
+
+                    <button
+                      className="profile-cancel-btn"
+                      onClick={() => {
+                        setShowPasswordModal(false);
+
+                        setPasswordData({
+                          currentPassword: "",
+                          newPassword: "",
+                          confirmPassword: "",
+                        });
+                      }}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+          </>
+        )}
       </div>
-
-      <section className="profile-feature-grid">
-        <div className="profile-feature-card"><CiHeadphones /> 24/7 Support<br /><span style={{ fontWeight: 400, fontSize: '10px', color: '#9ca3af' }}>We're here to help you anytime</span></div>
-        <div className="profile-feature-card"><HiOutlineBadgeCheck /> Best Price Guarantee<br /><span style={{ fontWeight: 400, fontSize: '10px', color: '#9ca3af' }}>Get the best deals always</span></div>
-        <div className="profile-feature-card"><MdPayment /> Secure Payments<br /><span style={{ fontWeight: 400, fontSize: '10px', color: '#9ca3af' }}>100% secure and safe</span></div>
-        <div className="profile-feature-card"><FaStar style={{ color: "gold" }} /> Trusted by Travelers<br /><span style={{ fontWeight: 400, fontSize: '10px', color: '#9ca3af' }}>4.9/5 from 10,000+ reviews</span></div>
-      </section>
-
     </div>
   );
 };
