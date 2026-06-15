@@ -3,16 +3,16 @@ const crypto = require("crypto");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const sendEmail = require("../utils/sendEmail");
-const registerService = async ({first_name,last_name,email,phone_number,password,}) => {
+const registerService = async ({ first_name, last_name, email, phone_number, password, }) => {
 
-  const existingEmail = await User.findOne({email});
+  const existingEmail = await User.findOne({ email });
   if (existingEmail) {
     throw new Error(
       "User with this email already exists"
     );
   }
 
-  const existingPhone = await User.findOne({phone_number});
+  const existingPhone = await User.findOne({ phone_number });
   if (existingPhone) {
     throw new Error(
       "User with this phone number already exists"
@@ -37,7 +37,7 @@ const registerService = async ({first_name,last_name,email,phone_number,password
   return user;
 };
 
-const loginService = async ({email,password,}) => {
+const loginService = async ({ email, password, }) => {
   const user = await User.findOne({
     email,
   });
@@ -70,11 +70,12 @@ const loginService = async ({email,password,}) => {
       last_name: user.last_name,
       email: user.email,
       phone_number: user.phone_number,
+      passwordChangedAt: user.passwordChangedAt
     },
   };
 };
 
-const updateProfileService = async (userId,data) => {
+const updateProfileService = async (userId, data) => {
   const user = await User.findById(userId);
 
   if (!user) {
@@ -92,10 +93,10 @@ const updateProfileService = async (userId,data) => {
       "Profile updated successfully",
     user: {
       id: user._id,
-      first_name:user.first_name,
-      last_name:user.last_name,
-      email:user.email,
-      phone_number:user.phone_number,
+      first_name: user.first_name,
+      last_name: user.last_name,
+      email: user.email,
+      phone_number: user.phone_number,
     },
   };
 };
@@ -149,7 +150,7 @@ const resetPasswordService =
       );
     }
     const salt =
-    await bcrypt.genSalt(10);
+      await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(password, salt);
     user.resetToken = undefined;
     user.resetTokenExpiry = undefined;
@@ -160,10 +161,61 @@ const resetPasswordService =
     };
   };
 
+const changePasswordService = async (
+  userId,
+  { currentPassword, newPassword }
+) => {
+
+  const user = await User.findById(userId);
+
+  if (!user) {
+    throw new Error("User not found");
+  }
+
+  const isMatch = await bcrypt.compare(
+    currentPassword,
+    user.password
+  );
+
+  if (!isMatch) {
+    throw new Error(
+      "Current password is incorrect"
+    );
+  }
+
+  const isSamePassword = await bcrypt.compare(
+    newPassword,
+    user.password
+  );
+
+  if (isSamePassword) {
+    throw new Error(
+      "New password must be different from current password"
+    );
+  }
+
+  const salt = await bcrypt.genSalt(10);
+
+  user.password = await bcrypt.hash(
+    newPassword,
+    salt
+  );
+
+  user.passwordChangedAt = new Date();
+
+  await user.save();
+
+  return {
+    message:
+      "Password changed successfully"
+  };
+};
+
 module.exports = {
   registerService,
   loginService,
   updateProfileService,
   forgotPasswordService,
   resetPasswordService,
+  changePasswordService
 };  
